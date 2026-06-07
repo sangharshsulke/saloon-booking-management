@@ -1,30 +1,41 @@
 const { Sequelize } = require('sequelize');
 const dbConfig = require('./dbConfig');
 
+const sequelizeOptions = {
+  host: dbConfig.DB_HOST,
+  port: dbConfig.DB_PORT,
+  dialect: 'postgres',
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
+  pool: {
+    max: 20,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  define: {
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    underscored: true,
+    paranoid: true, // Enable soft deletes
+    deletedAt: 'deleted_at'
+  }
+};
+
+if (dbConfig.DB_SSL) {
+  sequelizeOptions.dialectOptions = {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  };
+}
+
 const sequelize = new Sequelize(
   dbConfig.DB_NAME,
   dbConfig.DB_USER,
   dbConfig.DB_PASSWORD,
-  {
-    host: dbConfig.DB_HOST,
-    port: dbConfig.DB_PORT,
-    dialect: 'postgres',
-    logging: process.env.NODE_ENV === 'development' ? console.log : false,
-    pool: {
-      max: 20,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    },
-    define: {
-      timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
-      underscored: true,
-      paranoid: true, // Enable soft deletes
-      deletedAt: 'deleted_at'
-    }
-  }
+  sequelizeOptions
 );
 
 // Test connection
