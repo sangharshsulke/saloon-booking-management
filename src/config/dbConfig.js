@@ -62,6 +62,7 @@ console.log('DB config resolved:', {
 });
 
 module.exports = {
+  DATABASE_URL: databaseUrl,
   DB_HOST,
   DB_PORT,
   DB_NAME,
