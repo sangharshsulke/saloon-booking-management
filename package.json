@@ -1,6 +1,9 @@
 {
   "name": "salon-booking-api",
   "version": "1.0.0",
+  "engines": {
+  "node": "22.x"
+  },
   "description": "Salon booking system REST API",
   "main": "server.js",
   "scripts": {
