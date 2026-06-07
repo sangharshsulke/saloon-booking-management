@@ -15,7 +15,12 @@ const pool = new Pool({
   port: dbConfig.DB_PORT,
   database: dbConfig.DB_NAME,
   user: dbConfig.DB_USER,
-  password: dbConfig.DB_PASSWORD
+  password: dbConfig.DB_PASSWORD,
+  ssl: dbConfig.DB_SSL
+    ? {
+        rejectUnauthorized: false
+      }
+    : false
 });
 
 // ============================================

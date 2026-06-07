@@ -10,6 +10,14 @@ const sequelize = new Sequelize(
     port: dbConfig.DB_PORT,
     dialect: 'postgres',
     logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    dialectOptions: dbConfig.DB_SSL
+      ? {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false
+          }
+        }
+      : {},
     pool: {
       max: 20,
       min: 0,

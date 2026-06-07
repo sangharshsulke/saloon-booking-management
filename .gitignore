@@ -1,2 +1,37 @@
 node_modules
 .env
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Build files
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# VS Code
+.vscode/
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java
+target/
+
+# .NET
+bin/
+obj/
