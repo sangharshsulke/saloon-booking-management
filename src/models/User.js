@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     user_type: {
-      type: DataTypes.ENUM('customer', 'vendor', 'admin'),
+      type: DataTypes.ENUM('customer', 'vendor', 'admin','vendor'),
       allowNull: false,
       defaultValue: 'customer'
     },
