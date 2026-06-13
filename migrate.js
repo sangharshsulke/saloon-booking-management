@@ -5,19 +5,18 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const dbConfig = require('./src/config/dbConfig');
 
 // ============================================
 // DATABASE CONFIGURATION
 // ============================================
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'salon_booking_system',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '123456'
-};
-
-const pool = new Pool(dbConfig);
+const pool = new Pool({
+  host: dbConfig.DB_HOST,
+  port: dbConfig.DB_PORT,
+  database: dbConfig.DB_NAME,
+  user: dbConfig.DB_USER,
+  password: dbConfig.DB_PASSWORD
+});
 
 // ============================================
 // HELPER FUNCTIONS

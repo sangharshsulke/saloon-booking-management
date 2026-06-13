@@ -15,6 +15,16 @@ function sendSuccessResponse(res, data = null, message = "Success", status = 200
   });
 }
 
+function successResponse(res, messageOrData = null, dataOrMessage = null, status = 200) {
+  const isMessageFirst = typeof messageOrData === 'string' && (typeof dataOrMessage !== 'number' || typeof dataOrMessage === 'string');
+
+  if (isMessageFirst) {
+    return sendSuccessResponse(res, dataOrMessage ?? null, messageOrData, typeof status === 'number' ? status : 200);
+  }
+
+  return sendSuccessResponse(res, messageOrData ?? null, typeof dataOrMessage === 'string' ? dataOrMessage : 'Success', typeof status === 'number' ? status : 200);
+}
+
 /**
  * Send error response (Standard)
  * @param {Object} res - Express response object
@@ -33,6 +43,18 @@ function sendErrorResponse(res, message = "Error", status = 400, errors = null) 
   }
 
   return res.status(status).json(response);
+}
+
+function errorResponse(res, messageOrStatus = 'Error', statusOrMessage = 400, errors = null) {
+  if (typeof messageOrStatus === 'string' && typeof statusOrMessage === 'number') {
+    return sendErrorResponse(res, messageOrStatus, statusOrMessage, errors);
+  }
+
+  if (typeof messageOrStatus === 'number' && typeof statusOrMessage === 'string') {
+    return sendErrorResponse(res, statusOrMessage, messageOrStatus, errors);
+  }
+
+  return sendErrorResponse(res, 'Error', 400, errors);
 }
 
 /**
@@ -55,5 +77,7 @@ function sendPaginatedResponse(res, data, pagination, message = "Success") {
 module.exports = {
   sendSuccessResponse,
   sendErrorResponse,
-  sendPaginatedResponse
+  sendPaginatedResponse,
+  successResponse,
+  errorResponse
 };
